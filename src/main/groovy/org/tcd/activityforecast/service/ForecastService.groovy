@@ -25,7 +25,8 @@ public class ForecastService {
     @Value('${api.key}')
     String key
     
-    // TODO - error response behavior
+    // TODO - handle error response behavior
+    // TODO - translate to Weather object here
     @Memoized
     def getForecast(Location location, ZonedDateTime datetime) {
         logger.debug("location ${location}")
@@ -35,7 +36,7 @@ public class ForecastService {
         logger.debug("formattedDateTime ${formattedDateTime}")
         RestTemplate restTemplate = new RestTemplate()
         String result = restTemplate.getForObject(url, String.class, key, location.toCSV(), formattedDateTime)
-        logger.debug(result)
+        logger.debug("weather forecast response ${result}")
         def slurper = new JsonSlurper()
         slurper.parseText(result)
     }

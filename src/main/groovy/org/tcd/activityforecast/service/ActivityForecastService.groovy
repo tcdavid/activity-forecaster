@@ -1,5 +1,6 @@
 package org.tcd.activityforecast.service
 
+import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.LocalTime
 import java.time.ZoneId
@@ -21,30 +22,33 @@ public class ActivityForecastService {
     
     List<ActivityForecastSummary> getActivityForecast(Location location, DateRange dateRange) {
         
-        // TODO - do multiple calls for range
-        ZonedDateTime datetime = ZonedDateTime.of(dateRange.startDate, LocalTime.of(0,0,0), ZoneOffset.systemDefault())
-        def forecast = forecastService.getForecast(location, datetime)
         def summaries = []
         
-        for (i in 0..0) {
-        
-            Weather weather = translateWeatherData(forecast.daily.data[i])
-            
-            def activityForecasts = []
-            
-            for (activity in Activity.values()) {
-                Rating rating = ratingLogic.determineRating(activity, weather)
-                activityForecasts << new ActivityForecast(activity: activity, rating: rating)
-            }
-            
-            def summary = new ActivityForecastSummary(time: 1234L, 
-                    weather: weather, activityForecasts: activityForecasts)
-            
+        // TODO - use closure
+        for (LocalDate date in dateRange.toList()) {
+            ZonedDateTime datetime = ZonedDateTime.of(date, LocalTime.of(0,0,0), ZoneOffset.systemDefault())
+            def summary = getActivityForecastForDate(location, datetime)
             summaries << summary
-        
         }
         
         return summaries
+    }
+
+     ActivityForecastSummary getActivityForecastForDate(Location location, ZonedDateTime datetime) {
+        def forecast = forecastService.getForecast(location, datetime)
+
+        Weather weather = translateWeatherData(forecast.daily.data[0])
+
+        def activityForecasts = []
+
+        for (activity in Activity.values()) {
+            Rating rating = ratingLogic.determineRating(activity, weather)
+            activityForecasts << new ActivityForecast(activity: activity, rating: rating)
+        }
+
+        def summary = new ActivityForecastSummary(time: forecast.daily.data[0].time,
+                                weather: weather, activityForecasts: activityForecasts)
+        return summary
     }
     
     // TODO - perform the translation in the forecast service
