@@ -38,7 +38,11 @@ public class ActivityForecastService {
     ActivityForecastSummary getActivityForecastForDate(Location location, ZonedDateTime datetime) {
         def forecast = forecastService.getForecast(location, datetime)
 
-        Weather weather = translateWeatherData(forecast.daily.data[0])
+        def data = forecast?.daily?.data
+        if (!data) {
+            throw new IllegalArgumentException("No data available for location ${location} on ${datetime} ")
+        }
+        Weather weather = translateWeatherData(data[0])
 
         def activityForecasts = []
 
@@ -55,6 +59,7 @@ public class ActivityForecastService {
     
     // TODO - perform the translation in the forecast service
     Weather translateWeatherData(def data) {
+        
         Weather weather = new Weather()
         weather.cloudCover = data.cloudCover
         weather.moonPhase = data.moonPhase
