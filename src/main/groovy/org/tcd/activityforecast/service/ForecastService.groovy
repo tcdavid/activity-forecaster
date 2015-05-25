@@ -5,9 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
+import org.tcd.activityforecast.domain.Location
 
 import groovy.json.JsonSlurper
 import groovy.transform.Memoized;
+import java.sql.Timestamp
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 
 @Service
@@ -23,14 +27,22 @@ public class ForecastService {
     
     // TODO - error response behavior
     @Memoized
-    def getForecast(String location) {
-        RestTemplate restTemplate = new RestTemplate()
+    def getForecast(Location location, ZonedDateTime datetime) {
+        logger.debug("location ${location}")
+        logger.debug("dateTime ${datetime}")
         
-        String result = restTemplate.getForObject(url, String.class, key, location)
+        String formattedDateTime = formatDateTime(datetime)
+        logger.debug("formattedDateTime ${formattedDateTime}")
+        RestTemplate restTemplate = new RestTemplate()
+        String result = restTemplate.getForObject(url, String.class, key, location.toCSV(), formattedDateTime)
         logger.debug(result)
         def slurper = new JsonSlurper()
         slurper.parseText(result)
-        
+    }
+    
+    String formatDateTime(ZonedDateTime zonedDateTime) {
+        DateTimeFormatter f = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+        return f.format(zonedDateTime)
     }
     
 }

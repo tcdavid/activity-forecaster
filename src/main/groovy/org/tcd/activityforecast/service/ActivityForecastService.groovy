@@ -1,5 +1,9 @@
 package org.tcd.activityforecast.service
 
+import java.time.ZonedDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,12 +19,14 @@ public class ActivityForecastService {
     @Autowired
     ActivityRatingLogic ratingLogic
     
-    List<ActivityForecastSummary> getActivityForecast(String location) {
+    List<ActivityForecastSummary> getActivityForecast(Location location, DateRange dateRange) {
         
-        def forecast = forecastService.getForecast(location)
+        // TODO - do multiple calls for range
+        ZonedDateTime datetime = ZonedDateTime.of(dateRange.startDate, LocalTime.of(0,0,0), ZoneOffset.systemDefault())
+        def forecast = forecastService.getForecast(location, datetime)
         def summaries = []
         
-        for (i in 0..6) {
+        for (i in 0..0) {
         
             Weather weather = translateWeatherData(forecast.daily.data[i])
             
