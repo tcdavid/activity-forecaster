@@ -26,7 +26,7 @@ public class ActivityForecastService {
         
         // TODO - use closure
         for (LocalDate date in dateRange.toList()) {
-            ZonedDateTime datetime = ZonedDateTime.of(date, LocalTime.of(0,0,0), ZoneOffset.systemDefault())
+            ZonedDateTime datetime = createZonedDateTime(date)
             def summary = getActivityForecastForDate(location, datetime)
             summaries << summary
         }
@@ -34,13 +34,15 @@ public class ActivityForecastService {
         return summaries
     }
 
-     ActivityForecastSummary getActivityForecastForDate(Location location, ZonedDateTime datetime) {
+
+    ActivityForecastSummary getActivityForecastForDate(Location location, ZonedDateTime datetime) {
         def forecast = forecastService.getForecast(location, datetime)
 
         Weather weather = translateWeatherData(forecast.daily.data[0])
 
         def activityForecasts = []
 
+        // TODO - use closure
         for (activity in Activity.values()) {
             Rating rating = ratingLogic.determineRating(activity, weather)
             activityForecasts << new ActivityForecast(activity: activity, rating: rating)
@@ -65,4 +67,10 @@ public class ActivityForecastService {
         weather.humidity = data.humidity
         return weather
     }
+    
+    // TODO - use location to get timezone/zone offset
+    ZonedDateTime createZonedDateTime(LocalDate date) {
+        ZonedDateTime.of(date, LocalTime.of(0,0,0), ZoneOffset.systemDefault())
+    }
+
 }

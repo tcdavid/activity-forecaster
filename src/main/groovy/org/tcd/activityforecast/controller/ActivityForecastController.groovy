@@ -24,10 +24,11 @@ public class ActivityForecastController {
     List<ActivityForecastSummary> getActivityForecast(@PathVariable String location, @PathVariable String daterange) {
         
         // TODO - check parameters for validity
+        // Location - required
+        // DateRange - startDate - required
         // DateRange - startDate >= today - 1 week
         // DateRange - endDate - startDate <= 14
         
-        // TODO - use location to get Timezone
         return service.getActivityForecast(createLocation(location), createDateRange(daterange))
     }
     
