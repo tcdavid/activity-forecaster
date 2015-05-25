@@ -23,8 +23,6 @@ public class ActivityForecastController {
     @Autowired
     ActivityForecastService service
     
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     @RequestMapping(value = "/{location}/{daterange}", method = RequestMethod.GET)
     List<ActivityForecastSummary> getActivityForecast(@PathVariable String location, @PathVariable String daterange) {
         
