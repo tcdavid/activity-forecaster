@@ -1,0 +1,50 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+	dependencies { 
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.1.RELEASE")
+		classpath 'org.cloudfoundry:cf-gradle-plugin:1.1.1'
+	}
+}
+apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'cloudfoundry'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+
+ext { springBootVersion = '1.2.3.RELEASE' }
+
+repositories { mavenCentral() }
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+	compile 'org.codehaus.groovy:groovy:2.4.1'
+    compile 'org.codehaus.groovy:groovy-json:2.4.1'
+	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '2.3'
+}
+
+cloudfoundry {
+	target = "https://api.run.pivotal.io"
+	space = "development"
+	file = new File('build/libs/ActivityForecast.jar')
+	application = 'activity-forecast'
+	uri = "activity-forecast-tcdavid.cfapps.io"
+	memory = 512
+	instances = 1
+
+	services {
+		
+	}
+}
