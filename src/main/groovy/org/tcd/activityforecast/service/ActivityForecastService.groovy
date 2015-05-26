@@ -22,16 +22,11 @@ public class ActivityForecastService {
     
     List<ActivityForecastSummary> getActivityForecast(Location location, DateRange dateRange) {
         
-        def summaries = []
-        
-        // TODO - use closure
-        for (LocalDate date in dateRange.toList()) {
+        return dateRange.toList().collect { date ->
             ZonedDateTime datetime = createZonedDateTime(date)
             def summary = getActivityForecastForDate(location, datetime)
-            summaries << summary
         }
-        
-        return summaries
+  
     }
 
 
@@ -44,12 +39,9 @@ public class ActivityForecastService {
         }
         Weather weather = translateWeatherData(data[0])
 
-        def activityForecasts = []
-
-        // TODO - use closure
-        for (activity in Activity.values()) {
+        def activityForecasts = Activity.values().collect {activity ->
             Rating rating = ratingLogic.determineRating(activity, weather)
-            activityForecasts << new ActivityForecast(activity: activity, rating: rating)
+            new ActivityForecast(activity: activity, rating: rating)
         }
 
         def summary = new ActivityForecastSummary(time: forecast.daily.data[0].time,
