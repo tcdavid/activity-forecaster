@@ -14,9 +14,7 @@ class RulesManager {
     
     List<Rule> rules = []
     
-    public RulesManager() {
-         
-    }
+    public RulesManager() { }
     
     @PostConstruct
     init() {

@@ -44,8 +44,7 @@ public class WeatherForecastService {
         if (!data) {
             throw new IllegalArgumentException("No data available for location ${location} on ${datetime} ")
         }
-        Weather weather = translateWeatherData(data[0])
-        return weather
+        return translateWeatherData(data[0])
     }
     
   

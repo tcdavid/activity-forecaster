@@ -37,9 +37,8 @@ public class ActivityForecastService {
             new ActivityForecast(activity: activity, rating: rating)
         }
 
-        def summary = new ActivityForecastSummary(time: weather.time,
+        new ActivityForecastSummary(time: weather.time,
                                 weather: weather, activityForecasts: activityForecasts)
-        return summary
     }
     
     Rating determineRating(Activity activity, Weather weather) {

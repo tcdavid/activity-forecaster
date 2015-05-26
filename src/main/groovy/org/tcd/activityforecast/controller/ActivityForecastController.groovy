@@ -41,7 +41,6 @@ public class ActivityForecastController {
     
     Location createLocation(String value) {
         List<String> values = value.tokenize(",")
-
         new Location(latitude: new BigDecimal(values[0]), longitude: new BigDecimal( values[1]))
     }
     
