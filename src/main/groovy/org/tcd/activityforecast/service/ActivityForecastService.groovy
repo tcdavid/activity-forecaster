@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.tcd.activityforecast.domain.*
+import org.tcd.activityforecast.rules.RulesManager;
 
 @Service
 public class ActivityForecastService {
@@ -18,8 +19,8 @@ public class ActivityForecastService {
     ForecastService forecastService
     
     @Autowired
-    ActivityRatingLogic ratingLogic
-    
+    RulesManager rulesManager
+
     List<ActivityForecastSummary> getActivityForecast(Location location, DateRange dateRange) {
         
         return dateRange.toList().collect { date ->
@@ -38,13 +39,22 @@ public class ActivityForecastService {
         Weather weather = translateWeatherData(data[0])
 
         def activityForecasts = Activity.values().collect {activity ->
-            Rating rating = ratingLogic.determineRating(activity, weather)
+            Rating rating = determineRating(activity, weather)
             new ActivityForecast(activity: activity, rating: rating)
         }
 
         def summary = new ActivityForecastSummary(time: forecast.daily.data[0].time,
                                 weather: weather, activityForecasts: activityForecasts)
         return summary
+    }
+    
+    Rating determineRating(Activity activity, Weather weather) {
+        
+        int score = rulesManager.calculateScore(activity, weather)
+        
+        if (score >= 4) return Rating.GOOD
+        if (score >= 2) return Rating.FAIR
+        return Rating.POOR
     }
     
     // TODO - perform the translation in the forecast service
