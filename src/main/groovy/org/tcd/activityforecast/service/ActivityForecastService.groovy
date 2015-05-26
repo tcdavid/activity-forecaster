@@ -26,7 +26,7 @@ public class ActivityForecastService {
         
         return dateRange.toList().collect { date ->
             ZonedDateTime datetime = createZonedDateTime(date)
-            def summary = getActivityForecastForDate(location, datetime)
+            getActivityForecastForDate(location, datetime)
         }
     }
 
