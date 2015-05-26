@@ -38,7 +38,7 @@ public class ActivityForecastService {
             new ActivityForecast(activity: activity, rating: rating)
         }
 
-        new ActivityForecastSummary(date: new Timestamp(weather.time*1000L).toLocalDateTime().toLocalDate(),
+        new ActivityForecastSummary(date: createDateString(weather.time),
                                 weather: weather, activityForecasts: activityForecasts)
     }
     
@@ -56,4 +56,7 @@ public class ActivityForecastService {
         ZonedDateTime.of(date, LocalTime.of(0,0,0), ZoneOffset.systemDefault())
     }
 
+    String createDateString(Long time) {
+        new Timestamp(time*1000L).toLocalDateTime().toLocalDate().toString()
+    }
 }
