@@ -29,6 +29,7 @@ dependencies {
     compile 'org.codehaus.groovy:groovy-json:2.4.1'
 	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
     testCompile('org.spockframework:spock-core:1.0-groovy-2.4')
+    testCompile('org.spockframework:spock-spring:1.0-groovy-2.4')
 }
 
 task wrapper(type: Wrapper) {
