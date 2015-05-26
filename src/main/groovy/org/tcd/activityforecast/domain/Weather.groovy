@@ -15,4 +15,5 @@ class Weather {
     BigDecimal visibility
     BigDecimal windSpeed
     BigDecimal moonPhase
+    Long time
 }

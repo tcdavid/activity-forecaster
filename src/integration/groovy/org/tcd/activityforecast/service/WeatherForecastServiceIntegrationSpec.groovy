@@ -32,7 +32,7 @@ class WeatherForecastServiceIntegrationSpec extends Specification {
             def result = service.getForecast(location, zonedDateTime)
             
         then:
-            result.currently.time == 1432270800
+            result.time == 1432191600
   
     }
     

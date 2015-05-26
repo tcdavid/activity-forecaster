@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.tcd.activityforecast.domain.Location
+import org.tcd.activityforecast.domain.Weather;
 
 import groovy.json.JsonSlurper
 import groovy.transform.Memoized;
+
 import java.sql.Timestamp
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -26,9 +28,8 @@ public class WeatherForecastService {
     String key
     
     // TODO - handle error response behavior
-    // TODO - translate to Weather object here
     @Memoized
-    def getForecast(Location location, ZonedDateTime datetime) {
+    Weather getForecast(Location location, ZonedDateTime datetime) {
         logger.debug("location ${location}")
         logger.debug("dateTime ${datetime}")
         
@@ -38,7 +39,30 @@ public class WeatherForecastService {
         String result = restTemplate.getForObject(url, String.class, key, location.toCSV(), formattedDateTime)
         logger.debug("weather forecast response ${result}")
         def slurper = new JsonSlurper()
-        slurper.parseText(result)
+        def forecast = slurper.parseText(result)
+        def data = forecast?.daily?.data
+        if (!data) {
+            throw new IllegalArgumentException("No data available for location ${location} on ${datetime} ")
+        }
+        Weather weather = translateWeatherData(data[0])
+        return weather
+    }
+    
+  
+    Weather translateWeatherData(def data) {
+        
+        Weather weather = new Weather()
+        weather.cloudCover = data.cloudCover
+        weather.moonPhase = data.moonPhase
+        weather.precipProbability = data.precipProbability
+        weather.precipType = data.precipType
+        weather.temperatureMax = data.temperatureMax
+        weather.temperatureMin = data.temperatureMin
+        weather.visibility = data.visibility
+        weather.windSpeed = data.windSpeed
+        weather.humidity = data.humidity
+        weather.time = data.time
+        return weather
     }
     
     String formatDateTime(ZonedDateTime zonedDateTime) {
