@@ -16,7 +16,7 @@ import org.tcd.activityforecast.rules.RulesManager;
 public class ActivityForecastService {
 
     @Autowired
-    ForecastService forecastService
+    WeatherForecastService forecastService
     
     @Autowired
     RulesManager rulesManager
