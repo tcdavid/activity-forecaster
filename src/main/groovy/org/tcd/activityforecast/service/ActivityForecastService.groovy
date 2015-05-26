@@ -1,5 +1,6 @@
 package org.tcd.activityforecast.service
 
+import java.sql.Timestamp
 import java.time.LocalDate
 import java.time.ZonedDateTime
 import java.time.LocalTime
@@ -37,7 +38,7 @@ public class ActivityForecastService {
             new ActivityForecast(activity: activity, rating: rating)
         }
 
-        new ActivityForecastSummary(time: weather.time,
+        new ActivityForecastSummary(date: new Timestamp(weather.time*1000L).toLocalDateTime().toLocalDate(),
                                 weather: weather, activityForecasts: activityForecasts)
     }
     
