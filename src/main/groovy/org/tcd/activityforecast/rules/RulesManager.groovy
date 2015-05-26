@@ -1,11 +1,11 @@
 package org.tcd.activityforecast.rules
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.tcd.activityforecast.domain.Activity
 import org.tcd.activityforecast.domain.Weather
-import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct
 
 @Component
 class RulesManager {

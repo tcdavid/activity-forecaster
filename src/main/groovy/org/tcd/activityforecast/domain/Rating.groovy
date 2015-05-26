@@ -1,4 +1,4 @@
-package org.tcd.activityforecast.domain;
+package org.tcd.activityforecast.domain
 
 public enum Rating {
     POOR,

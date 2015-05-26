@@ -1,7 +1,7 @@
 package org.tcd.activityforecast.rules
 
-import groovy.transform.EqualsAndHashCode;
-import groovy.transform.ToString;
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 
 @ToString
 @EqualsAndHashCode
