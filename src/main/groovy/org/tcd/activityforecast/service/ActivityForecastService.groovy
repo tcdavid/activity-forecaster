@@ -26,9 +26,7 @@ public class ActivityForecastService {
             ZonedDateTime datetime = createZonedDateTime(date)
             def summary = getActivityForecastForDate(location, datetime)
         }
-  
     }
-
 
     ActivityForecastSummary getActivityForecastForDate(Location location, ZonedDateTime datetime) {
         def forecast = forecastService.getForecast(location, datetime)

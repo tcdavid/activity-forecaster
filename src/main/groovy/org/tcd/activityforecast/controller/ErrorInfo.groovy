@@ -1,14 +1,12 @@
 package org.tcd.activityforecast.controller;
 
+import groovy.transform.EqualsAndHashCode;
+import groovy.transform.ToString;
+
+@ToString
+@EqualsAndHashCode
 public class ErrorInfo {
     String url
     String message
 
-    public ErrorInfo() {
-    }
-    
-    public ErrorInfo(String url, Exception ex) {
-        this.url = url;
-        this.message = ex.getLocalizedMessage();
-    }
 }
