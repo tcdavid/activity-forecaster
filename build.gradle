@@ -24,7 +24,6 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
 	compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
 	compile("org.springframework.boot:spring-boot-starter-actuator")
-	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
 	compile 'org.codehaus.groovy:groovy:2.4.1'
     compile 'org.codehaus.groovy:groovy-json:2.4.1'
 	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")

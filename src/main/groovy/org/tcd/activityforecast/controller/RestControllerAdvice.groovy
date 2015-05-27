@@ -7,7 +7,6 @@ import org.springframework.web.context.request.WebRequest
 @ControllerAdvice
 public class RestControllerAdvice {
 
-    
     @ExceptionHandler(NumberFormatException.class)
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -21,7 +20,6 @@ public class RestControllerAdvice {
     public ErrorInfo illegalArgument(Exception exception, WebRequest request) {
         return new ErrorInfo(message: exception.localizedMessage, url: request.getDescription(false))
     }
-    
     
     @ExceptionHandler(java.time.DateTimeException.class)
     @ResponseStatus(value=HttpStatus.BAD_REQUEST)

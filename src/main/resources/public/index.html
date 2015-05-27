@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Activity Forecast </title>
+	</head>
+
+	<body style="margin-top: 30px; margin-left: 50px; ">
+		<p>This application provides a REST API to retrieve a forecast of the suitability of certain activities on specified dates. </p>
+		<p>
+		<p>A request has the general form:
+		<p>
+		<p>/api/activityforecast/Location/DateRange</p>
+		<ul> 
+			<li>Location is expressed by latitude,longitude</li>
+			<li>DateRange is expressed by startDate,endDate</li>
+		</ul>
+		<p>
+		<p>/api/activityforecast/latitude,longitude/startDate,endDate</p>
+		<p>
+		<p>An example request would be:<p>
+		<ul>
+			<li><a href="/api/activityforecast/44.8178,-93.1669/2015-05-25,2015-06-02">/api/activityforecast/44.8178,-93.1669/2015-05-25,2015-06-02</a></li>
+		</ul>
+		<p>which would request an activity forecast for Eagan,MN for a date range from 2015-05-25 to 2015-06-02 </p>
+		<p>
+		<p> Other sample requests: </p>
+		<ul>
+			<li><a href="/api/activityforecast/90.0,0.00/2015-05-27">/api/activityforecast/90.0,0.00/2015-05-27</a></li>
+			<li><a href="/api/activityforecast/-90.0,0.00/2015-05-27">/api/activityforecast/-90.0,0.00/2015-06-02</a></li>
+			<li><a href="/api/activityforecast/21.3000,-157.8167/2015-05-27,2015-06-07">/api/activityforecast/21.3000,-157.8167/2015-05-27,2015-06-07</a></li>
+		</ul>
+		<p>Restrictions on requests include: <p>
+		<ul>
+			<li>Location: required, valid latitude and longitude </li>
+			<li>DateRange: startDate - required </li>
+			<li>DateRange: startDate >= today - 1 week </li>
+			<li>DateRange: endDate - startDate <= 14 </li>
+			<li>DateRange: endDate > startDate (if present)</li>
+		</ul>
+		<p>
+		<p> Requests with invalid values return an HTML response of 400, "Bad Request"</p>
+		<p>
+		<p> The following is an example of a request with an invalid value: </p>
+		<ul>
+			<li><a href="/api/activityforecast/44.8178,-93.1669/2015-05-25,2015-05-24">/api/activityforecast/44.8178,-93.1669/2015-05-25,2015-05-24</a></li>
+		</ul>
+	</body>
+	
+</html>
