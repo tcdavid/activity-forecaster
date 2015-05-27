@@ -39,13 +39,13 @@ public class ActivityForecastService {
         }
 
         new ActivityForecastSummary(date: createDateString(weather.time),
-                                weather: weather, activityForecasts: activityForecasts)
+                                    weather: weather, 
+                                    activityForecasts: activityForecasts)
     }
     
     Rating determineRating(Activity activity, Weather weather) {
         
         int score = rulesManager.calculateScore(activity, weather)
-        
         if (score >= 4) return Rating.GOOD
         if (score >= 2) return Rating.FAIR
         return Rating.POOR

@@ -7,7 +7,7 @@ import java.time.LocalDate
 @ToString
 @EqualsAndHashCode
 class ActivityForecastSummary {
-    String date;
-    Weather weather;
-    List<ActivityForecast> activityForecasts;
+    String date
+    Weather weather
+    List<ActivityForecast> activityForecasts
 }

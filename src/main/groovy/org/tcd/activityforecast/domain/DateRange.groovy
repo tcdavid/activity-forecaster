@@ -19,8 +19,8 @@ class DateRange {
         } else {
             LocalDate start = startDate
             while (!start.isAfter(endDate)){
-                totalDates.add(start);
-                start=start.plusDays(1);
+                totalDates.add(start)
+                start=start.plusDays(1)
             }
         }
         return totalDates
