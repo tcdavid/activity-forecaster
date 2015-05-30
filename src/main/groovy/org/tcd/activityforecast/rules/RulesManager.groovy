@@ -18,7 +18,6 @@ class RulesManager {
     
     @PostConstruct
     init() {
-        this.rules = new ArrayList<Rule>()
         this.getClass().getResource('/rules.txt').eachLine { line ->
             if (!line.empty) {
                 rules << parseRule(line)
@@ -44,20 +43,18 @@ class RulesManager {
         List<String> tokens = text.tokenize()
         
         if (tokens[2] == "EQUALS") {
-            EqualsRule rule = new EqualsRule()
-            rule.activity = Activity.valueOf(tokens[0])
-            rule.field = tokens[1]
-            rule.ruleValue = tokens[3]
-            rule.score = new Integer(tokens[6])
-            return rule
+            return new EqualsRule(
+                activity: Activity.valueOf(tokens[0]),
+                field: tokens[1],
+                ruleValue: tokens[3],
+                score: new Integer(tokens[6]))
         } else {
-            BetweenRule rule = new BetweenRule()
-            rule.activity = Activity.valueOf(tokens[0])
-            rule.field = tokens[1]
-            rule.lowerRange = new BigDecimal(tokens[3])
-            rule.upperRange = new BigDecimal(tokens[5])
-            rule.score = new Integer(tokens[8])
-            return rule
+            return new BetweenRule(
+                activity: Activity.valueOf(tokens[0]),
+                field: tokens[1],
+                lowerRange: new BigDecimal(tokens[3]),
+                upperRange: new BigDecimal(tokens[5]),
+                score: new Integer(tokens[8]))
         }
     }
     
