@@ -29,7 +29,7 @@ class RulesManager {
     
     int calculateScore(Activity activity, Weather data) {
         int score = 0
-        List<Rule> applicableRules = getRulesForActivity(activity);
+        List<Rule> applicableRules = getRulesForActivity(activity)
         if (applicableRules) {
             score = applicableRules.sum { it.appliedScore(data) }
         }
