@@ -6,12 +6,11 @@ import java.time.ZonedDateTime
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZoneOffset
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.tcd.activityforecast.domain.*
-import org.tcd.activityforecast.rules.RulesManager;
+import org.tcd.activityforecast.rules.RulesManager
 
 @Service
 public class ActivityForecastService {

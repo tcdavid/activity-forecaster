@@ -1,7 +1,10 @@
 bin/
+out/
 build/
+*.iml
 .classpath
 .project
 .settings
 .gradle
 .DS_Store
+.idea

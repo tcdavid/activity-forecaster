@@ -1,20 +1,16 @@
 package org.tcd.activityforecast.controller
 
-import java.time.LocalDate
-
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.http.HttpStatus
-import org.tcd.activityforecast.domain.ActivityForecast
 import org.tcd.activityforecast.domain.ActivityForecastSummary
 import org.tcd.activityforecast.domain.DateRange
 import org.tcd.activityforecast.domain.Location
 import org.tcd.activityforecast.service.ActivityForecastService
+
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/activityforecast")

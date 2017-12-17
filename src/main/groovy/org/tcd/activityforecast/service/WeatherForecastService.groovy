@@ -1,38 +1,35 @@
 package org.tcd.activityforecast.service
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import groovy.json.JsonSlurper
+import groovy.transform.Memoized
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.tcd.activityforecast.domain.Location
-import org.tcd.activityforecast.domain.Weather;
+import org.tcd.activityforecast.domain.Weather
 
-import groovy.json.JsonSlurper
-import groovy.transform.Memoized;
-
-import java.sql.Timestamp
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
-
 
 @Service
 public class WeatherForecastService {
 
     Logger logger = LoggerFactory.getLogger(WeatherForecastService.class)
-    
+
     @Value('${api.url}')
     String url
-    
+
     @Value('${api.key}')
     String key
-    
+
     // TODO - handle error response behavior
     @Memoized
     Weather getForecast(Location location, ZonedDateTime datetime) {
         logger.debug("location ${location}")
         logger.debug("dateTime ${datetime}")
-        
+
         String formattedDateTime = formatDateTime(datetime)
         logger.debug("formattedDateTime ${formattedDateTime}")
         RestTemplate restTemplate = new RestTemplate()
@@ -46,27 +43,26 @@ public class WeatherForecastService {
         }
         return translateWeatherData(data[0])
     }
-    
-  
+
+
     Weather translateWeatherData(def data) {
-        
-        Weather weather = new Weather()
-        weather.cloudCover = data.cloudCover
-        weather.moonPhase = data.moonPhase
-        weather.precipProbability = data.precipProbability
-        weather.precipType = data.precipType
-        weather.temperatureMax = data.temperatureMax
-        weather.temperatureMin = data.temperatureMin
-        weather.visibility = data.visibility
-        weather.windSpeed = data.windSpeed
-        weather.humidity = data.humidity
-        weather.time = data.time
-        return weather
+
+        new Weather(
+                cloudCover: data.cloudCover,
+                moonPhase: data.moonPhase,
+                precipProbability: data.precipProbability,
+                precipType: data.precipType,
+                temperatureMax: data.temperatureMax,
+                temperatureMin: data.temperatureMin,
+                visibility: data.visibility,
+                windSpeed: data.windSpeed,
+                humidity: data.humidity,
+                time: data.time
+        )
     }
-    
+
     String formatDateTime(ZonedDateTime zonedDateTime) {
-        DateTimeFormatter f = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-        return f.format(zonedDateTime)
+        DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(zonedDateTime)
     }
-    
+
 }
